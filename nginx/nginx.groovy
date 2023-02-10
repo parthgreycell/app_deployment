@@ -2,14 +2,6 @@ node{
   try{
     def PUBLISHTAG = """sh date +%Y_%m_%d-%H_%M_%S-%A"""
     def repoRegion = ""
-
-    stage('Preparation'){
-       if (''.equals(TagName)){
-        echo "[FAILURE] TagName parameter is required - Failed to build, value provided : ${TagName}"
-        currentBuild.result = 'FAILURE'
-        throw new RuntimeException("required parameter missing : ${TagName}");
-      }
-    }
     
     stage('Building Docker Image'){
       // dir('BidClips-API-Restheart') {
