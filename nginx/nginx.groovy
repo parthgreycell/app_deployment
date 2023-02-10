@@ -9,7 +9,7 @@ node{
         sh """        
         ls
         cd nginx
-        docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} .
+        docker build -t nginx .
         pwd
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
