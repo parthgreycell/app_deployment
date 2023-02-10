@@ -15,7 +15,7 @@ node{
     stage("Publishing ${PUBLISHTAG}"){
         sh '''
   export AWS_PROFILE=default
-  aws ecr get-login-password --region us-east-1 | docker login --username parth --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com
+  sudo aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com
   docker tag nginx:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
           '''
