@@ -4,7 +4,7 @@ node{
     def repoRegion = ""
     
     stage('Building Docker Image'){
-      dir('app_deployment') {
+      dir('parth') {
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """        
         cd nginx
