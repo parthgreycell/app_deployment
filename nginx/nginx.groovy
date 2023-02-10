@@ -6,7 +6,7 @@ node{
     stage('Building Docker Image'){
       // dir('BidClips-API-Restheart') {
         sh """
-        docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/.
+        docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
         """
       // }
     }
@@ -20,15 +20,9 @@ node{
     }
     stage('Cleanup'){
       sh """
-      docker image rmi -f bidclips-api-restheart:${PUBLISHTAG}
-      docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/bidclips-api-restheart:${PUBLISHTAG}
+      docker image rmi -f nginx:${PUBLISHTAG}
+      docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/nginx:${PUBLISHTAG}
       """
-      dir('BidClips-Infrastructure') {
-        deleteDir()
-      }
-      dir('BidClips-API-Restheart') {
-        deleteDir()
-      }
     }
   }
   
