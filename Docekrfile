@@ -1,0 +1,5 @@
+FROM nginx:latest
+LABEL "Author"="Parth"
+ENV DEBIAN_FRONTEND=noninteractive
+RUN yum update && yum install git -y && yum install apache2 -y
+EXPOSE 80

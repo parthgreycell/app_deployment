@@ -1,0 +1,9 @@
+kops create cluster --name=django.parthchauhan.cloud --state=s3://django-state-25 --zones=us-east-1a,us-east-1b --node-count=1 --node-size=t3.small --master-size=t3.medium --dns-zone=django.parthchauhan.cloud
+
+
+kops update cluster --name=django.parthchauhan.cloud --state=s3://django-state-25 --yes --admin
+
+
+kops validate cluster --name=django.parthchauhan.cloud --state=s3://django-state-25
+
+
