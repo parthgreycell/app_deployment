@@ -5,8 +5,7 @@ node{
     
     stage('Building Docker Image'){
       dir('app_deployment') {
-        sh """
-        export AWS_PROFILE=parth
+        sh """        
         // docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
         docker build -t nginximg:${PUBLISHTAG} nginx/
         """
@@ -15,6 +14,7 @@ node{
 
     stage("Publishing ${PUBLISHTAG}"){
         sh """
+  export AWS_PROFILE=parth
   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com
   docker tag nginx:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
