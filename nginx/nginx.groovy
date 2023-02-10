@@ -10,6 +10,7 @@ node{
         cd nginx
         ls
         // docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
+        pwd
         docker build -t nginximg:${PUBLISHTAG} .
         docker images
          export AWS_PROFILE=default
