@@ -8,7 +8,8 @@ node{
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """        
         ls
-        docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
+        cd nginx
+        docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} .
         pwd
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
