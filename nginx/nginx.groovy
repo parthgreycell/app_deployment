@@ -9,7 +9,7 @@ node{
         sh """        
 
         // docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
-        docker build -t nginximg:${PUBLISHTAG} nginx/
+        docker build -t nginximg:${PUBLISHTAG} app_deployment/nginx/
         echo *******************************
         ls
         echo *******************************
