@@ -9,6 +9,7 @@ node{
         sh """        
         ls
         cd nginx
+        chmod 777 *
         docker build -t nginx .
         pwd
         #docker build -t nginximg:${PUBLISHTAG} nginx/
