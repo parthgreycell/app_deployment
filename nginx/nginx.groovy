@@ -1,6 +1,6 @@
 node{
   try{
-    def PUBLISHTAG = """sh date +%Y_%m_%d-%H_%M_%S-%A"""
+    def PUBLISHTAG = "agahsgdh"
     def repoRegion = ""
     
     stage('Building Docker Image'){
