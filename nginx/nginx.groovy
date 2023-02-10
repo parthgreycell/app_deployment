@@ -14,8 +14,8 @@ node{
 
     stage("Publishing ${PUBLISHTAG}"){
         sh """
-        aws sts get-caller-identity
   export AWS_PROFILE=parth
+  aws sts get-caller-identity
   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com
   docker tag nginx:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
