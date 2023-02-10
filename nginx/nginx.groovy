@@ -11,7 +11,7 @@ node{
         ls
         # docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
         pwd
-        docker build -t nginximg:${PUBLISHTAG} .
+        docker build -t nginximg:${PUBLISHTAG} Dockerfile
         docker images
          export AWS_PROFILE=default
   sudo aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com 
