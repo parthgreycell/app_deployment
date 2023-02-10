@@ -4,12 +4,12 @@ node{
     def repoRegion = ""
     
     stage('Building Docker Image'){
-      // dir('BidClips-API-Restheart') {
+      dir('app_deployment') {
         sh """
         // docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
         docker build -t nginximg:${PUBLISHTAG} nginx/
         """
-      // }
+      }
     }
 
     stage("Publishing ${PUBLISHTAG}"){
