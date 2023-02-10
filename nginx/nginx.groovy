@@ -6,7 +6,8 @@ node{
     stage('Building Docker Image'){
       // dir('BidClips-API-Restheart') {
         sh """
-        docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
+        // docker build --file=Dockerfile --tag=nginx:${PUBLISHTAG} nginx/
+        docker build -t nginximg:${PUBLISHTAG} nginx/
         """
       // }
     }
