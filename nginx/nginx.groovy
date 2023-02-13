@@ -11,7 +11,7 @@ node{
         mkdir /home/greycell/docker
         cp nginx/Dockerfile /home/greycell/docker/
         ls
-        docker build -t nginximg:${PUBLISHTAG} .
+        docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
         """
       }
     }
