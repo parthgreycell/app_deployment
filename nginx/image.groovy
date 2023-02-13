@@ -21,7 +21,7 @@ node{
         if (TagName.startsWith('tags')) {
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/${TagName}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
           PUBLISHTAG = TagName.split('/')[1]
-          IMAGE = TagName.split('/')[1]
+          IMAGE = mysqlimg
           repoRegion = "us-east-1"
 
           sh """  
@@ -42,10 +42,7 @@ node{
             returnStdout: true
           ).trim()
 
-          IMAGE = sh(
-            script: 'echo $(git log -1 --pretty=%h)',
-            returnStdout: true
-          ).trim()
+          IMAGE = pythonimg
           repoRegion = "us-east-1"
 
           sh """  
@@ -64,10 +61,7 @@ node{
             returnStdout: true
           ).trim()
 
-          IMAGE = sh(
-            script: 'echo $(git log -1 --pretty=%h)',
-            returnStdout: true
-          ).trim()
+          IMAGE = nginximg
           repoRegion = "us-east-1"
           
           sh """  
