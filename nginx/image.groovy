@@ -1,10 +1,8 @@
 node{
   try{
-
     parameters([
         [$class: 'ListSubversionTagsParameterDefinition', credentialsId: 'git_token', defaultValue: '', maxTags: '', name: 'TagName', reverseByDate: true, reverseByName: false, tagsDir: 'git@github.com:parthgreycell/app_deployment.git', tagsFilter: '']
       ])
-
 
     def PUBLISHTAG = ""
     def repoRegion = "us-east-1"
@@ -15,6 +13,7 @@ node{
         currentBuild.result = 'FAILURE'
         throw new RuntimeException("required parameter missing : ${TagName}");
       }
+
       dir('app_deployment') {
         if (TagName.startsWith('tags')) {
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/${TagName}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
@@ -25,8 +24,8 @@ node{
         cp mysql/Dockerfile /home/greycell/mysql/
         docker build -t mysqlimg:mysql /home/greycell/mysql/
         """
-
         }
+
         if (TagName.startsWith('branches')) {
           def branch = TagName.split('/')[1]
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
@@ -40,8 +39,8 @@ node{
         cp python/Dockerfile /home/greycell/python/
         docker build -t pythonimg:python /home/greycell/python/
         """
-
         }
+
         if (TagName.equals('trunk')) {
           TagName = 'branches/master'
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
@@ -55,7 +54,6 @@ node{
         cp nginx/Dockerfile /home/greycell/docker/
         docker build -t nginximg:nginx /home/greycell/docker/
         """
-        
         }
       }
     }
@@ -68,6 +66,7 @@ node{
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
           """
     }
+    
     stage('Cleanup'){
       sh """
       docker image rmi -f nginximg:${PUBLISHTAG}
