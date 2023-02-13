@@ -30,6 +30,7 @@ node{
         cp mysql/Dockerfile /home/greycell/mysql
         ls
         docker build -t mysqlimg /home/greycell/mysql/
+        docker images
         rm -rf /home/greycell/mysql
         """
         }
