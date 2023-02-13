@@ -1,7 +1,7 @@
 node{
   try{
     def PUBLISHTAG = "latest"
-    def repoRegion = ""
+    def repoRegion = "us-east-1"
     
     stage('Building Docker Image'){
       dir('app_deployment') {
@@ -26,7 +26,7 @@ node{
     stage('Cleanup'){
       sh """
       docker image rmi -f nginx:${PUBLISHTAG}
-      docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/nginx:${PUBLISHTAG}
+      docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/nginx:${PUBLISHTAG} 
       """
     }
   }
