@@ -11,6 +11,8 @@ node{
         cp nginx/Dockerfile docker/
         ls docker/
         cd docker
+        chmod 777 *
+        ls -ltr
         docker build -t nginximg .
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
