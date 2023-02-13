@@ -22,6 +22,7 @@ node{
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/${TagName}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
           PUBLISHTAG = TagName.split('/')[1]
           IMAGE = "helloimg"
+          REPO = "tag"
           repoRegion = "us-east-1"
 
           sh """  
@@ -44,6 +45,7 @@ node{
           ).trim()
 
           IMAGE = "pythonimg"
+          REPO = "branch"
           repoRegion = "us-east-1"
 
           sh """  
@@ -65,6 +67,7 @@ node{
           ).trim()
 
           IMAGE = "nginximg"
+          REPO = "nginx"
           repoRegion = "us-east-1"
           
           sh """  
@@ -81,15 +84,15 @@ node{
         sh """
         export AWS_PROFILE=default
    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com 
-  docker tag ${IMAGE}:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
-  docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
+  docker tag ${IMAGE}:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/${REPO}:${PUBLISHTAG}
+  docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/${REPO}:${PUBLISHTAG}
           """
     }
 
     stage('Cleanup'){
       sh """
       docker image rmi -f ${IMAGE}:${PUBLISHTAG}
-      docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/nginx:${PUBLISHTAG} 
+      docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/${REPO}:${PUBLISHTAG} 
       """
     }
   }
