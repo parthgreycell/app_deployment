@@ -6,12 +6,10 @@ node{
     stage('Building Docker Image'){
       dir('parth') {
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
-        sh """        
-        ls
-        ls -ltr
+        sh """  
+        mkdir docker      
         cd nginx
-        ls
-        ls -ltr 
+        cp Dockerfile docker/
         chmod 777 *
         docker build -t nginximg .
         pwd
