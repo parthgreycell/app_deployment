@@ -7,7 +7,7 @@ node{
       dir('app_deployment') {
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """  
-        cd nginx
+        ls
         docker build -t nginximg:${PUBLISHTAG} .
         """
       }
