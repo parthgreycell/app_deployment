@@ -48,7 +48,7 @@ node{
 
           sh """  
           mkdir /home/greycell/python
-        cp python/Dockerfile /home/greycell/python/
+        cp python/Dockerfile /home/greycell/python
         docker build -t pythonimg:${PUBLISHTAG} /home/greycell/python/
         rm -rf /home/greycell/mysql
         """
@@ -67,7 +67,7 @@ node{
           
           sh """  
           mkdir /home/greycell/docker
-        cp nginx/Dockerfile /home/greycell/docker/
+        cp nginx/Dockerfile /home/greycell/docker
         docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
         rm -rf /home/greycell/docker
         """
