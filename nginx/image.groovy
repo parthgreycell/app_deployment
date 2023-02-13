@@ -6,7 +6,7 @@ node{
       ])
 
 
-    def PUBLISHTAG = "latest"
+    def PUBLISHTAG = ""
     def repoRegion = "us-east-1"
 
     stage('Preparation'){
@@ -22,10 +22,8 @@ node{
           repoRegion = "us-east-1"
 
           sh """  
-        ls
         cp mysql/Dockerfile /home/greycell/mysql/
-        ls
-        docker build -t mysqlimg:${PUBLISHTAG} /home/greycell/mysql/
+        docker build -t mysqlimg:mysql /home/greycell/mysql/
         """
 
         }
@@ -39,10 +37,8 @@ node{
           repoRegion = "us-east-1"
 
           sh """  
-        ls
         cp python/Dockerfile /home/greycell/python/
-        ls
-        docker build -t pythonimg:${PUBLISHTAG} /home/greycell/python/
+        docker build -t pythonimg:python /home/greycell/python/
         """
 
         }
@@ -56,27 +52,13 @@ node{
           repoRegion = "us-east-1"
           
           sh """  
-        ls
         cp nginx/Dockerfile /home/greycell/docker/
-        ls
-        docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
+        docker build -t nginximg:nginx /home/greycell/docker/
         """
         
         }
       }
     }
-    
-    // stage('Building Docker Image'){
-    //   dir('app_deployment') {
-    //     checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
-    //     sh """  
-    //     ls
-    //     cp nginx/Dockerfile /home/greycell/docker/
-    //     ls
-    //     docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
-    //     """
-    //   }
-    // }
 
     stage("Publishing ${PUBLISHTAG}"){
         sh """
