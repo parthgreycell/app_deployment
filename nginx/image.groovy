@@ -1,8 +1,10 @@
 node{
   try{
+     properties([
     parameters([
-        [$class: 'ListSubversionTagsParameterDefinition', credentialsId: 'git_token', defaultValue: '', maxTags: '', name: 'TagName', reverseByDate: true, reverseByName: false, tagsDir: 'git@github.com:parthgreycell/app_deployment.git', tagsFilter: '']
+        [$class: 'ListSubversionTagsParameterDefinition', credentialsId: 'git_token', defaultValue: '', maxTags: '', name: 'TagName', reverseByDate: true, reverseByName: false, tagsDir: 'https://github.com/parthgreycell/app_deployment.git', tagsFilter: '']
       ])
+    ])
 
     def PUBLISHTAG = ""
     def IMAGE = ""
@@ -23,8 +25,10 @@ node{
           repoRegion = "us-east-1"
 
           sh """  
+          mkdir mysql
         cp mysql/Dockerfile /home/greycell/mysql/
         docker build -t mysqlimg:mysql /home/greycell/mysql/
+        rm -rf mysql
         """
         }
 
@@ -43,8 +47,10 @@ node{
           repoRegion = "us-east-1"
 
           sh """  
+          mkdir python
         cp python/Dockerfile /home/greycell/python/
         docker build -t pythonimg:python /home/greycell/python/
+        rm -rf python
         """
         }
 
@@ -63,8 +69,10 @@ node{
           repoRegion = "us-east-1"
           
           sh """  
+          mkdir docker
         cp nginx/Dockerfile /home/greycell/docker/
         docker build -t nginximg:nginx /home/greycell/docker/
+        rm -rf docker
         """
         }
       }
