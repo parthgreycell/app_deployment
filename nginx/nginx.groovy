@@ -9,7 +9,7 @@ node{
         sh """  
         ls
         mkdir docker
-        cp ngin/Dockerfile /docker/
+        cp nginx/Dockerfile /docker/
         ls
         docker build -t nginximg:${PUBLISHTAG} .
         """
