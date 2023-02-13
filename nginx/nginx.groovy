@@ -8,10 +8,11 @@ node{
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """  
         mkdir docker      
-        cd nginx
-        cp Dockerfile docker/
+        cp nginx/Dockerfile docker/
+        ls docker/
+        
         chmod 777 *
-        docker build -t nginximg .
+        docker build -t nginximg docker/
         pwd
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
