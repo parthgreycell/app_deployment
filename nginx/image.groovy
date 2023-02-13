@@ -29,7 +29,7 @@ node{
           ls
         cp mysql/Dockerfile /home/greycell/mysql
         ls
-        docker build -t mysqlimg:mysql /home/greycell/mysql/
+        docker build -t mysqlimg /home/greycell/mysql/
         rm -rf /home/greycell/mysql
         """
         }
@@ -48,7 +48,7 @@ node{
           sh """  
           mkdir /home/greycell/python
         cp python/Dockerfile /home/greycell/python/
-        docker build -t pythonimg:python /home/greycell/python/
+        docker build -t pythonimg /home/greycell/python/
         rm -rf /home/greycell/mysql
         """
         }
@@ -67,7 +67,7 @@ node{
           sh """  
           mkdir /home/greycell/docker
         cp nginx/Dockerfile /home/greycell/docker/
-        docker build -t nginximg:nginx /home/greycell/docker/
+        docker build -t nginximg /home/greycell/docker/
         rm -rf /home/greycell/docker
         """
         }
