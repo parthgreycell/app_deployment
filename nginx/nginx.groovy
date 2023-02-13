@@ -15,7 +15,7 @@ node{
         sudo usermod -aG docker $USER
         chmod 777 *
         ls -ltr
-        docker build -t nginximg:${PUBLISHTAG} .
+        sudo docker build -t nginximg:${PUBLISHTAG} .
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
         """
