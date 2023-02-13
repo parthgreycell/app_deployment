@@ -21,17 +21,17 @@ node{
         if (TagName.startsWith('tags')) {
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/${TagName}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
           PUBLISHTAG = TagName.split('/')[1]
-          IMAGE = "mysqlimg"
+          IMAGE = "helloimg"
           repoRegion = "us-east-1"
 
           sh """  
-          mkdir /home/greycell/mysql
+          mkdir /home/greycell/hello
           ls
-        cp mysql/Dockerfile /home/greycell/mysql
+        cp hello/Dockerfile /home/greycell/hello
         ls
-        docker build -t mysqlimg:${PUBLISHTAG} /home/greycell/mysql/
+        docker build -t helloimg:${PUBLISHTAG} /home/greycell/hello/
         docker images
-        rm -rf /home/greycell/mysql
+        rm -rf /home/greycell/hello
         """
         }
 
