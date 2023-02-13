@@ -19,13 +19,13 @@ node{
         sh """
         export AWS_PROFILE=default
    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com 
-  docker tag nginx:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
+  docker tag nginximg:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
           """
     }
     stage('Cleanup'){
       sh """
-      docker image rmi -f nginx:${PUBLISHTAG}
+      docker image rmi -f nginximg:${PUBLISHTAG}
       docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/nginx:${PUBLISHTAG} 
       """
     }
