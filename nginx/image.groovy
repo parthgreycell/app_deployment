@@ -27,7 +27,7 @@ node{
           sh """  
           mkdir /home/greycell/hello
           ls
-        cp hello/Dockerfile /home/greycell/hello
+        cp mysql/Dockerfile /home/greycell/hello
         ls
         docker build -t helloimg:${PUBLISHTAG} /home/greycell/hello/
         docker images
