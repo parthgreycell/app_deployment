@@ -48,6 +48,7 @@ node{
 
           sh """  
           mkdir /home/greycell/python
+          ls
         cp python/Dockerfile /home/greycell/python
         ls /home/greycell/python
         docker build -t pythonimg:${PUBLISHTAG} /home/greycell/python/
