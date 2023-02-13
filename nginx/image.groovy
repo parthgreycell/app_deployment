@@ -5,6 +5,7 @@ node{
       ])
 
     def PUBLISHTAG = ""
+    def IMAGE = ""
     def repoRegion = "us-east-1"
 
     stage('Preparation'){
@@ -18,6 +19,7 @@ node{
         if (TagName.startsWith('tags')) {
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/${TagName}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
           PUBLISHTAG = TagName.split('/')[1]
+          IMAGE = TagName.split('/')[1]
           repoRegion = "us-east-1"
 
           sh """  
@@ -30,6 +32,11 @@ node{
           def branch = TagName.split('/')[1]
           checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
           PUBLISHTAG = sh(
+            script: 'echo $(git log -1 --pretty=%h)',
+            returnStdout: true
+          ).trim()
+
+          IMAGE = sh(
             script: 'echo $(git log -1 --pretty=%h)',
             returnStdout: true
           ).trim()
@@ -48,6 +55,11 @@ node{
             script: 'echo $(git log -1 --pretty=%h)',
             returnStdout: true
           ).trim()
+
+          IMAGE = sh(
+            script: 'echo $(git log -1 --pretty=%h)',
+            returnStdout: true
+          ).trim()
           repoRegion = "us-east-1"
           
           sh """  
@@ -62,11 +74,11 @@ node{
         sh """
         export AWS_PROFILE=default
    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com 
-  docker tag nginximg:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
+  docker tag ${IMAGE}:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
           """
     }
-    
+
     stage('Cleanup'){
       sh """
       docker image rmi -f nginximg:${PUBLISHTAG}
