@@ -1,6 +1,6 @@
 node{
   try{
-    def PUBLISHTAG = "agahsgdh"
+    def PUBLISHTAG = "latest"
     def repoRegion = ""
     
     stage('Building Docker Image'){
@@ -10,18 +10,18 @@ node{
         ls
         cd nginx
         chmod 777 *
-        sudo docker build -t nginx .
+        sudo docker build -t nginximg .
         pwd
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
-         export AWS_PROFILE=default
-  sudo aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com 
         """
       }
     }
 
     stage("Publishing ${PUBLISHTAG}"){
         sh '''
+        export AWS_PROFILE=default
+   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 561279971319.dkr.ecr.us-east-1.amazonaws.com 
   docker tag nginx:${PUBLISHTAG} 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
   docker push 561279971319.dkr.ecr.us-east-1.amazonaws.com/nginx:${PUBLISHTAG}
           '''
