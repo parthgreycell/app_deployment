@@ -26,7 +26,9 @@ node{
 
           sh """  
           mkdir mysql
+          ls
         cp mysql/Dockerfile /home/greycell/mysql/
+        ls
         docker build -t mysqlimg:mysql /home/greycell/mysql/
         rm -rf mysql
         """
