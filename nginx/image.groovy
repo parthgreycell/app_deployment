@@ -29,7 +29,7 @@ node{
           ls
         cp mysql/Dockerfile /home/greycell/mysql
         ls
-        docker build -t mysqlimg /home/greycell/mysql/
+        docker build -t mysqlimg:${PUBLISHTAG} /home/greycell/mysql/
         docker images
         rm -rf /home/greycell/mysql
         """
