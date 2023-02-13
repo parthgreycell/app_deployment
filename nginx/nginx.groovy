@@ -9,7 +9,7 @@ node{
         sh """  
         ls
         mkdir docker
-        cp nginx/Dockerfile /home/greycell/docker/
+        cp nginx/Dockerfile /home/greycell/docker
         ls
         docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
         rm -rf docker
