@@ -11,8 +11,6 @@ node{
         cp nginx/Dockerfile docker/
         ls docker/
         cd docker
-        groupadd docker
-        usermod -aG docker $USER
         chmod 777 *
         ls -ltr
         docker build -t nginximg:${PUBLISHTAG} .
