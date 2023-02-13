@@ -25,12 +25,12 @@ node{
           repoRegion = "us-east-1"
 
           sh """  
-          mkdir mysql
+          mkdir /home/greycell/mysql
           ls
         cp mysql/Dockerfile /home/greycell/mysql/
         ls
         docker build -t mysqlimg:mysql /home/greycell/mysql/
-        rm -rf mysql
+        rm -rf /home/greycell/mysql
         """
         }
 
@@ -49,10 +49,10 @@ node{
           repoRegion = "us-east-1"
 
           sh """  
-          mkdir python
+          mkdir /home/greycell/python
         cp python/Dockerfile /home/greycell/python/
         docker build -t pythonimg:python /home/greycell/python/
-        rm -rf python
+        rm -rf /home/greycell/mysql
         """
         }
 
@@ -71,10 +71,10 @@ node{
           repoRegion = "us-east-1"
           
           sh """  
-          mkdir docker
+          mkdir /home/greycell/docker
         cp nginx/Dockerfile /home/greycell/docker/
         docker build -t nginximg:nginx /home/greycell/docker/
-        rm -rf docker
+        rm -rf /home/greycell/docker
         """
         }
       }

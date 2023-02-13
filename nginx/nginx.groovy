@@ -12,7 +12,7 @@ node{
         cp nginx/Dockerfile /home/greycell/docker
         ls
         docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
-        rm -rf docker
+        rm -rf /home/greycell/docker
         """
       }
     }
