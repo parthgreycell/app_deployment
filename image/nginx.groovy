@@ -1,6 +1,6 @@
 node{
   try{
-    def PUBLISHTAG = "nginx"
+    def PUBLISHTAG = "latest"
     def repoRegion = "us-east-1"
     
     stage('Building Docker Image'){
