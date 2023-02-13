@@ -8,6 +8,7 @@ node{
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """        
         ls
+        ls -ltr
         cd nginx
         ls
         ls -ltr 
