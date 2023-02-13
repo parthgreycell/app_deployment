@@ -1,6 +1,6 @@
 node{
   try{
-    def PUBLISHTAG = "latest"
+    def PUBLISHTAG = ""
     def repoRegion = "us-east-1"
     
     stage('Building Docker Image'){
@@ -8,9 +8,11 @@ node{
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """  
         ls
+        mkdir docker
         cp nginx/Dockerfile /home/greycell/docker/
         ls
         docker build -t nginximg:${PUBLISHTAG} /home/greycell/docker/
+        rm -rf docker
         """
       }
     }
