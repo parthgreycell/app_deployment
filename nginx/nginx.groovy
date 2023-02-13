@@ -10,6 +10,7 @@ node{
         ls
         cd nginx
         ls
+        ls -ltr 
         chmod 777 *
         docker build -t nginximg .
         pwd
