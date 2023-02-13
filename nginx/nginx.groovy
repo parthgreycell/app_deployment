@@ -10,10 +10,8 @@ node{
         mkdir docker      
         cp nginx/Dockerfile docker/
         ls docker/
-        
-        chmod 777 *
-        docker build -t nginximg docker/
-        pwd
+        cd docker
+        docker build -t nginximg .
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
         """
