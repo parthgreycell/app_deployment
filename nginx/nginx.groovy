@@ -10,7 +10,7 @@ node{
         ls
         cd nginx
         chmod 777 *
-        sudo docker build -t nginximg .
+        docker build -t nginximg .
         pwd
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
