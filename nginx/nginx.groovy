@@ -7,13 +7,8 @@ node{
       dir('parth') {
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """  
-        cd Desktop
-        mkdir docker      
-        cp nginx/Dockerfile docker/
-        ls docker/
-        cd docker
-        chmod 777 *
-        ls -ltr
+        cd
+        cd docker1
         docker build -t nginximg:${PUBLISHTAG} .
         #docker build -t nginximg:${PUBLISHTAG} nginx/
         docker images
