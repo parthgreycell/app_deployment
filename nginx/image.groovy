@@ -88,7 +88,7 @@ node{
 
     stage('Cleanup'){
       sh """
-      docker image rmi -f nginximg:${PUBLISHTAG}
+      docker image rmi -f ${IMAGE}:${PUBLISHTAG}
       docker image rmi -f 561279971319.dkr.ecr.${repoRegion}.amazonaws.com/nginx:${PUBLISHTAG} 
       """
     }
