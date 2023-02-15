@@ -16,8 +16,20 @@ spec:
     spec:
       containers:
         - name: nginx-app
-          image: nginx
+          image: REPLACEME_DOCKER_IMAGE_WITH_TAG
           ports:
             - name: nginx-port
               containerPort: 80
-      
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  - ports:
+      - port: 8090
+        targetPort: 80
+        protocol: TCP
+      selector:
+        app: nginx-app
+      type: LoadBalancer
