@@ -12,10 +12,10 @@ node{
     def DEPLOYTAG = ""
     def dockerImageWithTag = ""
     def repoRegion = [
-      "dev": "ap-southeast-1"
+      "dev": "us-east-1"
     ]
     def bootstrapper = [
-      "dev": "***"
+      "dev": "18.207.1.128"
     ]
     stage('Preparation'){
       if (''.equals(TagName)){
@@ -61,14 +61,14 @@ node{
         sh """
 cd nginx/
 sed -i 's#REPLACEME_DOCKER_IMAGE_WITH_TAG#$dockerImageWithTag#g' deployment.yaml
-scp deployment.yaml ec2-user@18.140.71.163:/home/ec2-user/deployment.yaml
+scp deployment.yaml ec2-user@18.207.1.128:/home/ec2-user/deployment.yaml
         """
       }
     }
 
     stage("Deploying ${DEPLOYTAG}"){
       sh """
-ssh -tt ec2-user@*** /bin/bash << EOA
+ssh -tt ec2-user@18.207.1.128 /bin/bash << EOA
 export AWS_DEFAULT_REGION="${repoRegion}"
 sleep 5;
 kubectl  apply -f deployment.yaml

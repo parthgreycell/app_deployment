@@ -7,3 +7,5 @@ kops update cluster --name=django.parthchauhan.cloud --state=s3://django-state-2
 kops validate cluster --name=django.parthchauhan.cloud --state=s3://django-state-25
 
 
+kops delete cluster --name=django.parthchauhan.cloud --state=s3://django-state-25 --yes
+
