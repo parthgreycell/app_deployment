@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: REPLACEME_DOCKER_IMAGE_WITH_TAG
+        image: nginx
         ports:
         - name: nginx-port
           containerPort: 80
