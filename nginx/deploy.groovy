@@ -52,9 +52,8 @@ node{
           deleteDir()
         }
       }
-
       
-        dockerImageWithTag="561279971319.dkr.ecr.${repoRegion}.amazonaws.com/bidclips-api-restheart:${DEPLOYTAG}".replace(':','\\:')
+        dockerImageWithTag="561279971319.dkr.ecr.${repoRegion}.amazonaws.com/${REPO}:${DEPLOYTAG}".replace(':','\\:')
 
       
         dir("app_deployment"){
@@ -75,7 +74,7 @@ sleep 5;
 kubectl  apply -f deployment.yaml
 rm deployment.*
 sleep 5;
-kubectl -n app-stack get deploy | grep deployment
+kubectl get deploy | grep deployment
 exit
 EOA
       """
