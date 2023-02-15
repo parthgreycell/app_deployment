@@ -1,4 +1,4 @@
-node("built-in"){
+node{
   try{
     properties([
       buildDiscarder(logRotator(numToKeepStr: '10')),
