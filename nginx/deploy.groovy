@@ -26,12 +26,17 @@ node("built-in"){
       if (TagName.startsWith('tags')) {
         DEPLOYTAG = TagName.split('/')[1]
         repoRegion = "us-east-1"
+        IMAGE = "helloimg"
+        REPO = "tag"
       }
       else{
         dir('app_deployment') {
           if (TagName.startsWith('branches')) {
             branch = TagName.split('/')[1]
             checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
+
+            IMAGE = "pythonimg"
+            REPO = "branch"
           }
           if (TagName.equals('trunk')) {
             TagName = 'branches/master'
@@ -42,6 +47,8 @@ node("built-in"){
             returnStdout: true
           ).trim()
           repoRegion = "us-east-1"
+          IMAGE = "nginximg"
+          REPO = "nginx"
           deleteDir()
         }
       }
@@ -49,28 +56,14 @@ node("built-in"){
       
         dockerImageWithTag="561279971319.dkr.ecr.${repoRegion}.amazonaws.com/bidclips-api-restheart:${DEPLOYTAG}".replace(':','\\:')
 
-      dir("app_deployment") {
-        if (TagName.startsWith('tags')) {
-          checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'refs/${TagName}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
-        }
-        if (TagName.startsWith('branches')) {
-          def branch = TagName.split('/')[1]
-          checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
-        }
-        if (TagName.equals('trunk')) {
-          TagName = 'branches/master'
-          checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
-        }
-
-
+      
         dir("app_deployment"){
         checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_token', url: 'git@github.com:parthgreycell/app_deployment.git']]]
         sh """
 cd nginx/
-sed -i 's#REPLACEME_DOCKER_IMAGE_WITH_TAG#$dockerImageWithTag#g' restheart.yaml
-scp restheart.yaml ec2-user@18.140.71.163:/home/ec2-user/restheart.yaml
+sed -i 's#REPLACEME_DOCKER_IMAGE_WITH_TAG#$dockerImageWithTag#g' deployment.yaml
+scp deployment.yaml ec2-user@18.140.71.163:/home/ec2-user/deployment.yaml
         """
-      }
       }
     }
 
@@ -79,10 +72,10 @@ scp restheart.yaml ec2-user@18.140.71.163:/home/ec2-user/restheart.yaml
 ssh -tt ec2-user@*** /bin/bash << EOA
 export AWS_DEFAULT_REGION="${repoRegion}"
 sleep 5;
-kubectl  apply -f restheart.yaml
-rm restheart.*
+kubectl  apply -f deployment.yaml
+rm deployment.*
 sleep 5;
-kubectl -n app-stack get deploy | grep restheart
+kubectl -n app-stack get deploy | grep deployment
 exit
 EOA
       """
