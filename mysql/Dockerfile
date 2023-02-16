@@ -1,4 +1,4 @@
-FROM hwllo-world:latest
+FROM hello-world:latest
 LABEL "Author"="Parth"
 ENV DEBIAN_FRONTEND=noninteractive
 EXPOSE 80
