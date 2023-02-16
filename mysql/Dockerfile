@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM hwllo-world:latest
 LABEL "Author"="Parth"
 ENV DEBIAN_FRONTEND=noninteractive
 EXPOSE 80
