@@ -20,9 +20,7 @@ node {
       ]
     )
 
-    def PROJECTS = [
-      ["publish", "https://github.com/parthgreycell/app_deployment.git"],
-    ]
+    def PROJECT = ["publish", "https://github.com/parthgreycell/app_deployment.git"]
 
     if (''.equals(TagName)){
       echo "[FAILURE] TagName parameter is required - Failed to build, value provided : ${TagName}"
@@ -30,13 +28,13 @@ node {
       throw new RuntimeException("required parameter missing : TagName");
     }
 
-    for (String PROJECT in PROJECTS) {
         sh """
         echo *******************
             echo $PROJECT[1]
             echo $PROJECT
         echo *******************
             """
+            
       def PROJECT_NAME = PROJECT[1].split('/parthgreycell/')[1].split('.git')[0]
       stage("Publish ${PROJECT_NAME} from [${TagName}]") {
         println("Project: ${PROJECT_NAME} [${TagName}]\nRepository: ${PROJECT[1]}\n");
@@ -52,7 +50,6 @@ node {
           ],
           quietPeriod: 5
         )
-      }
     }
   }
 
