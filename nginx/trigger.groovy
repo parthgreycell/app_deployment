@@ -31,7 +31,7 @@ node {
     }
 
     for (String PROJECT in PROJECTS) {
-        echo $PROJECT[1]
+        echo "$PROJECT[1]"
       def PROJECT_NAME = PROJECT[1].split('/parthgreycell/')[1].split('.git')[0]
       stage("Publish ${PROJECT_NAME} from [${TagName}]") {
         println("Project: ${PROJECT_NAME} [${TagName}]\nRepository: ${PROJECT[1]}\n");
