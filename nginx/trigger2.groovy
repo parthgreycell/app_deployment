@@ -1,24 +1,8 @@
 node {
   try{
     properties(
-      [
-        parameters(
-          [
-            [
-              $class: 'ListSubversionTagsParameterDefinition',
-              credentialsId: 'git_token',
-              defaultValue: '',
-              maxTags: '',
-              name: 'TagName',
-              reverseByDate: true,
-              reverseByName: false,
-              tagsDir: 'https://github.com/parthgreycell/app_deployment.git',
-              tagsFilter: ''
-            ]
-          ]
-        )
-      ]
-    )
+    [parameters([[$class: 'ListSubversionTagsParameterDefinition',credentialsId: 'git_token',defaultValue: '',maxTags: '',name: 'TagName',reverseByDate: true,reverseByName: false,tagsDir: 'https://github.com/parthgreycell/app_deployment.git',tagsFilter: ''
+            ]])])
 
 
     if (''.equals(TagName)){
@@ -26,18 +10,9 @@ node {
       currentBuild.result = 'FAILURE'
       throw new RuntimeException("required parameter missing : TagName");
     }
-        build(
-          job: "publish",
-          parameters: [
-            [
-                $class: 'ListSubversionTagsParameterValue',
-                name: 'TagName',
-                tag: TagName,
-                tagsDir: 'https://github.com/parthgreycell/app_deployment.git',
-            ]
-          ],
-          quietPeriod: 5
-        )
+        
+        build(job: "publish",parameters: [[$class: 'ListSubversionTagsParameterValue',name: 'TagName',tag: TagName,tagsDir: 'https://github.com/parthgreycell/app_deployment.git',]],quietPeriod: 5)
+  
   }
 
   catch( exec ){
