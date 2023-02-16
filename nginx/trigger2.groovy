@@ -60,4 +60,3 @@ catch( exec ){
       echo 'One way or another, I have finished'
     }
   }
-}
