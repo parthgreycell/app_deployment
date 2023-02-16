@@ -20,19 +20,21 @@ node {
       ]
     )
 
+    def PROJECTS = ["publish", "https://github.com/parthgreycell/app_deployment.git"]
+
     if (''.equals(TagName)){
       echo "[FAILURE] TagName parameter is required - Failed to build, value provided : ${TagName}"
       currentBuild.result = 'FAILURE'
       throw new RuntimeException("required parameter missing : TagName");
     }
         build(
-          job: publish,
+          job: PROJECTS[0],
           parameters: [
             [
                 $class: 'ListSubversionTagsParameterValue',
                 name: 'TagName',
                 tag: TagName,
-                tagsDir: 'https://github.com/parthgreycell/app_deployment.git'
+                tagsDir: 'https://github.com/parthgreycell/app_deployment.git',
             ]
           ],
           quietPeriod: 5
