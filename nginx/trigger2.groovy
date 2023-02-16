@@ -20,40 +20,28 @@ node {
       ]
     )
 
-    def PROJECT = ["publish", "https://github.com/parthgreycell/app_deployment.git"]
-
     if (''.equals(TagName)){
       echo "[FAILURE] TagName parameter is required - Failed to build, value provided : ${TagName}"
       currentBuild.result = 'FAILURE'
       throw new RuntimeException("required parameter missing : TagName");
     }
-
-        sh """
-        echo *******************
-            echo $PROJECT[1]
-            echo $PROJECT
-        echo *******************
-            """
-            
-      def PROJECT_NAME = PROJECT[1].split('/parthgreycell/')[1].split('.git')[0]
-      stage("Publish ${PROJECT_NAME} from [${TagName}]") {
-        println("Project: ${PROJECT_NAME} [${TagName}]\nRepository: ${PROJECT[1]}\n");
-        build(
-          job: PROJECT[0],
-          parameters: [
+     
+    build(
+        job: publish,
+        parameters: [
             [
-              $class: 'ListSubversionTagsParameterValue',
-              name: 'TagName',
-              tag: TagName,
-              tagsDir: PROJECT[1]
+                $class: 'ListSubversionTagsParameterValue',
+                name: 'TagName',
+                tag: TagName,
+                tagsDir: 'https://github.com/parthgreycell/app_deployment.git'
             ]
-          ],
-          quietPeriod: 5
-        )
-    }
-  }
+        ],
+        quietPeriod: 5
+    )
+}
+}
 
-  catch( exec ){
+catch( exec ){
     echo "FAILURE: ${exec}"
     currentBuild.result = 'FAILURE'
   }
