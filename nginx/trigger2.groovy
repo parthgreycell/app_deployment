@@ -25,23 +25,21 @@ node {
       currentBuild.result = 'FAILURE'
       throw new RuntimeException("required parameter missing : TagName");
     }
-     
-    build(
-        job: publish,
-        parameters: [
+        build(
+          job: publish,
+          parameters: [
             [
                 $class: 'ListSubversionTagsParameterValue',
                 name: 'TagName',
                 tag: TagName,
                 tagsDir: 'https://github.com/parthgreycell/app_deployment.git'
             ]
-        ],
-        quietPeriod: 5
-    )
-}
-}
+          ],
+          quietPeriod: 5
+        )
+  }
 
-catch( exec ){
+  catch( exec ){
     echo "FAILURE: ${exec}"
     currentBuild.result = 'FAILURE'
   }
@@ -60,3 +58,4 @@ catch( exec ){
       echo 'One way or another, I have finished'
     }
   }
+}
